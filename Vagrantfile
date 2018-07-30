@@ -29,12 +29,9 @@ Vagrant.configure("2") do |config|
     # this user is a mandatory requirement for this CentOS 7 image 
     override.ssh.username = "centos"
     override.ssh.private_key_path = ENV['AWS_PRIVATE_KEY_PATH']
+    override.nfs.functional = false
+    # /vagrant folder will be synced by default for aws
+    override.vm.allowed_synced_folder_types = [:rsync]
   end
-
-  # Share an additional folder to the guest VM. The first argument is
-  # the path on the host to the actual folder. The second argument is
-  # the path on the guest to mount the folder. And the optional third
-  # argument is a set of non-required options.
-  config.vm.synced_folder ".", "/vagrant", disabled: true
 
 end
