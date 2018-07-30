@@ -34,4 +34,8 @@ Vagrant.configure("2") do |config|
     override.vm.allowed_synced_folder_types = [:rsync]
   end
 
+  # Run Ansible from Vagrant host
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = "ansible/playbook.yml"
+  end
 end

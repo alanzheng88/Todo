@@ -1,0 +1,44 @@
+---
+- hosts: all
+  become: true
+  remote_user: centos
+  
+  tasks:
+    - name: Disable SELinux
+      selinux:
+        state: disabled
+
+    - name: Install Nginx rpm
+      yum:
+        name: http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+        state: present
+
+    - name: Install Nginx
+      yum:
+        name: nginx-1.14.0
+        state: present
+
+    - name: Copy virtual host files
+      copy:
+        src: "./files/nginx/{{item}}.conf"
+        dest: /etc/nginx/conf.d/
+      with_items:
+        - default
+        - amazonaws.com
+
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
+
+    - name: Install Remi rpm
+      yum:
+        name: http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+        state: present
+
+    - name: Install PHP and extensions
+      yum:
+        name: "{{item}}"
+        state: present
+      with_items:
+        - php56
