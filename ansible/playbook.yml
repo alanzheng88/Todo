@@ -24,12 +24,8 @@
         dest: /etc/nginx/conf.d/
       with_items:
         - default
-        - amazonaws.com
-
-    - name: Restart Nginx
-      service:
-        name: nginx
-        state: restarted
+        - amazonaws1.com
+        - amazonaws2.com
 
     - name: Install Remi rpm
       yum:
@@ -42,3 +38,22 @@
         state: present
       with_items:
         - php56
+        - php56-php-fpm
+   
+    - name: Update default values for php56-php-fpm
+      block:
+        - replace:
+            path: /opt/remi/php56/root/etc/php-fpm.d/www.conf
+            regexp: "{{item.regexp}}"
+            replace: "{{item.replace}}"
+          with_items:
+            - {regexp: user = apache, replace: user = nginx}
+            - {regexp: group = apache, replace: group = nginx}
+
+    - name: Restart Services
+      service:
+        name: "{{item}}"
+        state: restarted
+      with_items:
+        - nginx
+        - php56-php-fpm
