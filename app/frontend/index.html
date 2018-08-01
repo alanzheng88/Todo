@@ -1,15 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html data-ng-app="">
 
 <head>
   <title>Todo App by Alan Zheng</title>
 </head>
 
 <body>
+  <h1>What to do today? :)</h1>
   <form action="http://ec2-34-222-5-17.us-west-2.compute.amazonaws.com:5000/index.php" method="get">
-    <input type="input" name="task_name" placeholder="Enter task">
+    <input type="text" 
+        name="task_name" 
+        placeholder="Enter task"
+        data-ng-model="task_model">
+    <select
+        data-ng-init="types=['Home','Work','Outdoor']"
+        data-ng-model="type_model">
+        <option data-ng-repeat="type in types">{{ type }}</option>
+    </select>
     <input type="submit" value="Submit">
   </form>
+  <p>TODO: &lt;task: {{ task_model }}, type: {{ type_model }}&gt;</p>
+  <h3>Task Status</h3>
+  <ul data-ng-init="tasklist=[{name: 'Meal Prep', status: 'done'},
+                              {name: 'Do Garibaldi hike', status: 'not started'},
+                              {name: '21km run', status: 'in progress'}]">
+    <li data-ng-repeat="task in tasklist">{{ task.name }} - {{ task.status }}</li>
+  </ul>
+  
+  <script src="assets/js/angular.min.js"></script>
 </body>
 
 </html>
