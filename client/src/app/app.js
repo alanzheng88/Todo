@@ -1,6 +1,18 @@
 
 var app = angular.module('todoApp', ["ngRoute"])
 
+// FACTORIES
+/*
+app.factory('taskTypeFactory', function() {
+  var factory = {};
+  factory.getTypes = function() {
+    var types = ['Home','Work','Outdoor','School'];
+    return types;
+  }
+  return factory;
+});
+*/
+
 // ROUTES
 
 app.config(function($routeProvider) {
@@ -8,35 +20,42 @@ app.config(function($routeProvider) {
     .when('/weather',
         {
           controller: 'WeatherCtrl',
-          templateUrl: 'partials/weather.html'
+          templateUrl: 'weather/weather.html'
         })
     .when('/activity',
         {
           controller: 'ActivityCtrl',
-          templateUrl: 'partials/activity.html'
+          templateUrl: 'activity/activity.html'
         })
     .otherwise({ redirectTo: '/' });
 });
 
-
 // CONTROLLERS
+/*
+app.controller('BodyCtrl', function($scope, taskTypeFactory) {
+  init();
 
-var controllers = {};
-controllers.BodyCtrl = function($scope) {
-  $scope.types = ['Home','Work','Outdoor'];
-};
+  // can group initialization using a function
+  function init() {
+    $scope.types = taskTypeFactory.getTypes();
+  }
+});
+*/
 
-controllers.WeatherCtrl = function($scope) {
+/*
+app.controller('WeatherCtrl', function($scope) {
   $scope.statusInfo = "Rainy";
-}
+});
+*/
 
-controllers.ActivityCtrl = function($scope) {
+/*
+app.controller('ActivityCtrl', function($scope) {
   $scope.findActivity = function() {
     var location = $scope.newActivity.location;
     var age = $scope.newActivity.age;
     $scope.randomActivity = `Snowboarding at ${location || '<unknown>'} with
                             Alan who is age ${age || '<unknown>'}`;
   };
-}
+});
+*/
 
-app.controller(controllers);
