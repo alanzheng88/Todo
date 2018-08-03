@@ -12,6 +12,6 @@ vagrant up --provider=aws
 - ~aws ec2~
 - ~ansible~
 - ~nginx <selinux must be disabled to avoid permission issues when serving files>~
+- ~angular~
 - php
-- angular
 
