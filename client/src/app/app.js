@@ -1,20 +1,25 @@
+import angular from 'angular';
 
-var app = angular.module('todoApp', ["ngRoute"])
+import '../style/app.css';
 
-// ROUTES
+let app = () => {
+  return {
+    template: require('./app.html'),
+    controller: 'AppCtrl',
+    controllerAs: 'app'
+  }
+};
 
-app.config(function($routeProvider) {
-  $routeProvider
-    .when('/weather',
-        {
-          controller: 'WeatherCtrl',
-          templateUrl: 'weather/weather.html'
-        })
-    .when('/activity',
-        {
-          controller: 'ActivityCtrl',
-          templateUrl: 'activity/activity.html'
-        })
-    .otherwise({ redirectTo: '/' });
-});
+class AppCtrl {
+  constructor() {
+    this.url = 'https://github.com/preboot/angular-webpack';
+  }
+}
 
+const MODULE_NAME = 'app';
+
+angular.module(MODULE_NAME, [])
+  .directive('app', app)
+  .controller('AppCtrl', AppCtrl);
+
+export default MODULE_NAME;
