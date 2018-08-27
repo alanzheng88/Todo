@@ -1,4 +1,4 @@
-# TODO (http://todo.alanzheng.com)
+# TODO
 
 ### Setup
 ```
